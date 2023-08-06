@@ -29,7 +29,7 @@ export const postShortUrl = async (req, res) => {
     const { userId, url: openUrl, shortUrl } = { ...res.locals, shortUrl: nanoid(8) };
     await createLink(userId, openUrl, shortUrl);
     const { rows: [{ id }] } = await readLinkByShortUrl(shortUrl);
-    return res.send({ id, shortUrl });
+    return res.status(201).send({ id, shortUrl });
   }
   catch (err) { res.status(500).send(err.message); }
 };
