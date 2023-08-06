@@ -5,7 +5,7 @@
 -- Dumped from database version 15.3 (Ubuntu 15.3-1.pgdg23.04+1)
 -- Dumped by pg_dump version 15.3 (Ubuntu 15.3-1.pgdg23.04+1)
 
--- Started on 2023-08-06 13:43:37 -03
+-- Started on 2023-08-06 14:01:41 -03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 2 (class 3079 OID 41275)
+-- TOC entry 2 (class 3079 OID 41377)
 -- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -27,7 +27,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
 
 --
--- TOC entry 3424 (class 0 OID 0)
+-- TOC entry 3425 (class 0 OID 0)
 -- Dependencies: 2
 -- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: -
 --
@@ -40,21 +40,22 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 220 (class 1259 OID 41301)
+-- TOC entry 220 (class 1259 OID 41403)
 -- Name: links; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.links (
     id integer NOT NULL,
+    "userId" integer,
     "openUrl" text NOT NULL,
     "sortUrl" character varying(8) NOT NULL,
     "visitCount" integer DEFAULT 0 NOT NULL,
-    "createAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+    "createdAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
 --
--- TOC entry 219 (class 1259 OID 41300)
+-- TOC entry 219 (class 1259 OID 41402)
 -- Name: links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -68,7 +69,7 @@ CREATE SEQUENCE public.links_id_seq
 
 
 --
--- TOC entry 3425 (class 0 OID 0)
+-- TOC entry 3426 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -77,7 +78,7 @@ ALTER SEQUENCE public.links_id_seq OWNED BY public.links.id;
 
 
 --
--- TOC entry 218 (class 1259 OID 41287)
+-- TOC entry 218 (class 1259 OID 41389)
 -- Name: session; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -85,12 +86,12 @@ CREATE TABLE public.session (
     id integer NOT NULL,
     "userId" integer,
     token uuid DEFAULT public.uuid_generate_v4(),
-    "createAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+    "createdAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
 --
--- TOC entry 217 (class 1259 OID 41286)
+-- TOC entry 217 (class 1259 OID 41388)
 -- Name: session_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -104,7 +105,7 @@ CREATE SEQUENCE public.session_id_seq
 
 
 --
--- TOC entry 3426 (class 0 OID 0)
+-- TOC entry 3427 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -113,7 +114,7 @@ ALTER SEQUENCE public.session_id_seq OWNED BY public.session.id;
 
 
 --
--- TOC entry 216 (class 1259 OID 41264)
+-- TOC entry 216 (class 1259 OID 41366)
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -122,12 +123,12 @@ CREATE TABLE public.users (
     name character varying(256) NOT NULL,
     email character varying(256) NOT NULL,
     password character varying(256) NOT NULL,
-    "createAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+    "createdAt" timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
 --
--- TOC entry 215 (class 1259 OID 41263)
+-- TOC entry 215 (class 1259 OID 41365)
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -141,7 +142,7 @@ CREATE SEQUENCE public.users_id_seq
 
 
 --
--- TOC entry 3427 (class 0 OID 0)
+-- TOC entry 3428 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -150,7 +151,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- TOC entry 3263 (class 2604 OID 41304)
+-- TOC entry 3263 (class 2604 OID 41406)
 -- Name: links id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -158,7 +159,7 @@ ALTER TABLE ONLY public.links ALTER COLUMN id SET DEFAULT nextval('public.links_
 
 
 --
--- TOC entry 3260 (class 2604 OID 41290)
+-- TOC entry 3260 (class 2604 OID 41392)
 -- Name: session id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -166,7 +167,7 @@ ALTER TABLE ONLY public.session ALTER COLUMN id SET DEFAULT nextval('public.sess
 
 
 --
--- TOC entry 3258 (class 2604 OID 41267)
+-- TOC entry 3258 (class 2604 OID 41369)
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -174,7 +175,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 3273 (class 2606 OID 41310)
+-- TOC entry 3273 (class 2606 OID 41412)
 -- Name: links links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -183,7 +184,7 @@ ALTER TABLE ONLY public.links
 
 
 --
--- TOC entry 3275 (class 2606 OID 41312)
+-- TOC entry 3275 (class 2606 OID 41414)
 -- Name: links links_sortUrl_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -192,7 +193,7 @@ ALTER TABLE ONLY public.links
 
 
 --
--- TOC entry 3271 (class 2606 OID 41294)
+-- TOC entry 3271 (class 2606 OID 41396)
 -- Name: session session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -201,7 +202,7 @@ ALTER TABLE ONLY public.session
 
 
 --
--- TOC entry 3267 (class 2606 OID 41274)
+-- TOC entry 3267 (class 2606 OID 41376)
 -- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -210,7 +211,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3269 (class 2606 OID 41272)
+-- TOC entry 3269 (class 2606 OID 41374)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -219,7 +220,16 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3276 (class 2606 OID 41295)
+-- TOC entry 3277 (class 2606 OID 41415)
+-- Name: links links_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.links
+    ADD CONSTRAINT "links_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+
+
+--
+-- TOC entry 3276 (class 2606 OID 41397)
 -- Name: session session_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -227,7 +237,7 @@ ALTER TABLE ONLY public.session
     ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
 
 
--- Completed on 2023-08-06 13:43:37 -03
+-- Completed on 2023-08-06 14:01:41 -03
 
 --
 -- PostgreSQL database dump complete
