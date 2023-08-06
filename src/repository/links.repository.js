@@ -9,8 +9,8 @@ export const readLinkById = (id) => db.query(
 export const readLinkByShortUrl = (shortUrl) => db.query(
   `SELECT * FROM "links" WHERE "shortUrl" = $1;`, [shortUrl]);
 
-export const updateLinkVisitCount = (visitCount) => db.query(
-  `UPDATE "links" SET "visitCount" = $1`, [visitCount]);
+export const updateLinkVisitCount = (visitCount, shortUrl) => db.query(
+  `UPDATE "links" SET "visitCount" = $1 WHERE "shortUrl" = $2;`, [visitCount, shortUrl]);
 
 export const deleteLinkById = (id) => db.query(
   `DELETE FROM "links" WHERE "id" = $1;`, [id]);
