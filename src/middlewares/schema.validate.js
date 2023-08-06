@@ -8,7 +8,6 @@ export const validateSchema = (schema) => {
       }
       res.locals = { ...res.locals, ...validation.value };
     } catch (err) { return res.status(500).send(err.message); }
-
     next();
   };
 };

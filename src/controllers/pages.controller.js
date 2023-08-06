@@ -1,4 +1,3 @@
-import { db } from '../database/database.connection.js';
 
 
 export const getUser = async (req, res) => {

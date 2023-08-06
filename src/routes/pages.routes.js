@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getRaking, getUser } from "../controllers/pages.routes.js";
+import { getRaking, getUser } from "../controllers/pages.controller.js";
 
 const page_router = Router();
 

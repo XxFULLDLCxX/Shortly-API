@@ -1,4 +1,4 @@
-import { createSession, createUser, deleteSession, readSession, readUserByEmail } from '../repository/auth.repository.js';
+import { createSession, createUser, deleteSession, readSessionByUserId, readUserByEmail } from '../repository/auth.repository.js';
 import bcrypt from 'bcrypt';
 
 export const signup = async (req, res) => {
@@ -25,7 +25,7 @@ export const signin = async (req, res) => {
 
     await deleteSession(user.id);
     await createSession(user.id);
-    const { rows: [{ token }] } = await readSession(user.id);
+    const { rows: [{ token }] } = await readSessionByUserId(user.id);
 
     return res.send({ token });
   }
