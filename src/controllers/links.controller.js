@@ -19,7 +19,7 @@ export const redirectToOpenUrl = async (req, res) => {
     const { rows: [link] } = await readLinkByShortUrl(req.params.shortUrl);
     if (!link) return res.status(404).send("link not found");
     await updateLinkVisitCount(++link.visitCount, req.params.shortUrl);
-    res.redirect(200, link.openUrl);
+    res.redirect(link.openUrl);
   }
   catch (err) { res.status(500).send(err.message); }
 };
